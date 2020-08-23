@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds" debug="true">
+    <statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" />
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+
+                <pattern>[%d][%p] %m [%C.%M\(%C{0}.java:%L\)] %t%n</pattern>
+        </layout>
+    </appender>
+
+    <root level="DEBUG">
+        <appender-ref ref="Console" />
+    </root>
+
+    <!-- Log everything at the TRACE level -->
+    <logger name="com.example" level="DEBUG" additivity="false">
+        <appender-ref ref="Console" />
+    </logger>
+</configuration>

@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{.Values.deploy.name}}
+spec:
+  replicas: {{ .Values.deploy.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.deploy.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.deploy.name }}
+        aadpodidbinding: {{ .Values.podIdentity }}
+    spec:
+      containers:
+        - image: "{{ .Values.deploy.image }}:{{ .Values.deploy.imageTag }}"
+          imagePullPolicy: Always
+          name: {{ .Values.deploy.name }}
+          env:
+            - name: SERVER_PORT
+              value: "{{ .Values.service.port }}"
+            - name: MGMT_SERVER_PORT
+              value: "{{ .Values.service.mgmt_port }}"
+            - name: SERVER_ADDR
+              value: "{{ .Values.service.server_addr }}"
+      restartPolicy: Always
